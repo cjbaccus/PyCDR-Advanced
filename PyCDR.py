@@ -3,6 +3,7 @@
 import sys
 import csv
 import time
+import re
 
 """
 PyCDR.py
@@ -47,9 +48,9 @@ if __name__ == '__main__':
         out2 = open((sys.argv[4]), 'w')
         reader = csv.reader(infile)
         writer = csv.writer(outfile)
-        writer2 = csv.writer(out2)
+#        writer2 = csv.writer(out2)
 #       Placehoder for International call counting
-        intCalls = 0
+        IntCalls = 0
 
 
         writer.writerow(['Date/Time', 'Duration', 'Calling Number', 'Called Number', 'Final Called Number'] )
@@ -61,11 +62,13 @@ if __name__ == '__main__':
                 matchInternat = re.match(r'\+1*', row[8], re.M|re.I)
 #                writer2.writerow("file")
                 if matchInternat:
-                   InCalls += 1
+                   IntCalls += 1
 
 
 
-        writer2.writerow(intCalls)
+#        writer2.writeline(IntCalls)
+        International = "International calls: %s" % IntCalls
+        out2.write(International)
         print("Finished successfully!")
         infile.close()
         outfile.close()

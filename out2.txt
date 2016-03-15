@@ -1,1 +1,1 @@
-International = ,2
+International calls: 64
