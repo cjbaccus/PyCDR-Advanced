@@ -1,1 +1,2 @@
-International calls: 64
+International calls: 8
+National calls: 64

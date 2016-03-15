@@ -51,7 +51,7 @@ if __name__ == '__main__':
 #        writer2 = csv.writer(out2)
 #       Placehoder for International call counting
         IntCalls = 0
-
+        NatCalls = 0
 
         writer.writerow(['Date/Time', 'Duration', 'Calling Number', 'Called Number', 'Final Called Number'] )
 
@@ -59,16 +59,21 @@ if __name__ == '__main__':
         for row in reader:
             if row[8] == (sys.argv[3]) or row[29] == (sys.argv[3]):
                 writer.writerow([date_and_time(row[47]),convert_duration(row[55]),row[8],row[29], row[30]])
-                matchInternat = re.match(r'\+1*', row[8], re.M|re.I)
+                matchInternat = re.match(r'\+[^1].+', row[8], re.M|re.I)
+                matchNat = re.match(r'\+1*', row[8], re.M|re.I)
 #                writer2.writerow("file")
                 if matchInternat:
                    IntCalls += 1
+                if matchNat:
+                   NatCalls += 1
 
 
 
 #        writer2.writeline(IntCalls)
         International = "International calls: %s" % IntCalls
-        out2.write(International)
+        National = "National calls: %s" % NatCalls
+        out2.write(International + "\n")
+        out2.write(National + "\n")
         print("Finished successfully!")
         infile.close()
         outfile.close()
