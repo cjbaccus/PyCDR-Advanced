@@ -43,20 +43,29 @@ if __name__ == '__main__':
     else:
         infile = open((sys.argv[1]), 'r')
         outfile = open((sys.argv[2]), 'w')
+#       Experimental out2 to add another output file summarizing TON calls.
         out2 = open((sys.argv[4]), 'w')
         reader = csv.reader(infile)
         writer = csv.writer(outfile)
         writer2 = csv.writer(out2)
-        intCalls = "2"
+#       Placehoder for International call counting
+        intCalls = 0
 
-        writer.writerow(['Date/Time', 'Duration', 'Calling Number', 'Called Number', 'Final Called Number', 'Duration'] )
-#        writer2.writerow("start")
+
+        writer.writerow(['Date/Time', 'Duration', 'Calling Number', 'Called Number', 'Final Called Number'] )
+
 
         for row in reader:
             if row[8] == (sys.argv[3]) or row[29] == (sys.argv[3]):
-                writer.writerow([date_and_time(row[47]),convert_duration(row[55]),row[8],row[29], row[30], row[55]])
+                writer.writerow([date_and_time(row[47]),convert_duration(row[55]),row[8],row[29], row[30]])
+                matchInternat = re.match(r'\+1*', row[8], re.M|re.I)
 #                writer2.writerow("file")
-        writer2.writerow(['International = ',intCalls])
+                if matchInternat:
+                   InCalls += 1
+
+
+
+        writer2.writerow(intCalls)
         print("Finished successfully!")
         infile.close()
         outfile.close()
