@@ -47,8 +47,6 @@ if __name__ == '__main__':
         out2 = open('Totals.txt', 'w')
         reader = csv.reader(infile)
         writer = csv.writer(outfile)
-#        writer2 = csv.writer(out2)
-#       Placehoder for International call counting
         IntCalls = 0
         NatCalls = 0
         LocalCalls = 0
@@ -58,14 +56,10 @@ if __name__ == '__main__':
 
         for row in reader:
             if re.match((sys.argv[3]), row[8]) or re.match((sys.argv[3]), row[29]):
-#            if row[8] == (sys.argv[3]) or row[29] == (sys.argv[3]):
                 writer.writerow([date_and_time(row[47]),convert_duration(row[55]),row[8],row[29], row[30]])
                 matchInternat = re.match('^7011.+', row[29]) or re.match('\+[^1].+', row[29])
                 matchNat = re.match('^71.{10}', row[29]) or re.match('\+1.{10}', row[29])
                 matchLocal = re.match('^4....', row[29]) or re.match('^31...', row[29])
-#                matchInternat = re.match(r'\+[^1].+', row[8], re.M|re.I)
-#                matchNat = re.match(r'\+1*', row[8], re.M|re.I)
-#                writer2.writerow("file")
                 if matchInternat:
                    IntCalls += 1
                 if matchNat:
@@ -74,8 +68,6 @@ if __name__ == '__main__':
                     LocalCalls += 1
 
 
-
-#        writer2.writeline(IntCalls)
         International = "International calls: %s" % IntCalls
         National = "National calls: %s" % NatCalls
         Local = "Local Calls: %s" % LocalCalls
