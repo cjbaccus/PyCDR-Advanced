@@ -9,6 +9,7 @@ import re
 PyCDR.py
 
 Author: Steve Campbell, Github: https://github.com/sdcampbell/PyCDR
+Hacker: Carl Baccus, Github: http://github.com/cjbaccus/PyCDR-Advanced
 
 Purpose: Searches the Cisco Call Manager (CUCM) Call Detail Records (CDR) csv file for an extension,
 and saves the Date/Time, call duration, calling number, and called number to a new csv file.
@@ -18,7 +19,7 @@ and DO NOT CHECK 'CMR RECORDS'!
 Run this script and specify three command line arguments:
 1. The path and name of the input csv file
 2. The path and name of the output csv file
-3. The extension to search for
+3. The extension or pattern to search for
 
 Example: PyCDR.py "/path/to/cdr.txt" "/path/to/output.txt" 4357
 """
