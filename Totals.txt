@@ -1,0 +1,3 @@
+International calls: 0
+National calls: 3
+Local Calls: 62

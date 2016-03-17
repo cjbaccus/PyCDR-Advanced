@@ -35,45 +35,53 @@ def convert_duration(secs):
 
 if __name__ == '__main__':
 
-    usage = 'Error, Correct Usage: PyCDR.py "/path/to/cdrfile" "/path/to/output.txt" 4357 "path/to/summary/out2.txt"'
+    usage = 'ERROR!\nUsage: PyCDR.py "/path/to/cdrfile" "/path/to/output.txt" <extension or pattern>\n Example: python PyCDR.py CDR.txt Cleaned.txt 877\n\n The results should print anything that starts with 877. '
 
-    if (len(sys.argv) < 5):
+    if (len(sys.argv) < 4):
         print(usage)
         sys.exit()
 
     else:
         infile = open((sys.argv[1]), 'r')
         outfile = open((sys.argv[2]), 'w')
-#       Experimental out2 to add another output file summarizing TON calls.
-        out2 = open((sys.argv[4]), 'w')
+        out2 = open('Totals.txt', 'w')
         reader = csv.reader(infile)
         writer = csv.writer(outfile)
 #        writer2 = csv.writer(out2)
 #       Placehoder for International call counting
         IntCalls = 0
         NatCalls = 0
+        LocalCalls = 0
 
         writer.writerow(['Date/Time', 'Duration', 'Calling Number', 'Called Number', 'Final Called Number'] )
 
 
         for row in reader:
-            if row[8] == (sys.argv[3]) or row[29] == (sys.argv[3]):
+            if re.match((sys.argv[3]), row[8]) or re.match((sys.argv[3]), row[29]):
+#            if row[8] == (sys.argv[3]) or row[29] == (sys.argv[3]):
                 writer.writerow([date_and_time(row[47]),convert_duration(row[55]),row[8],row[29], row[30]])
-                matchInternat = re.match(r'\+[^1].+', row[8], re.M|re.I)
-                matchNat = re.match(r'\+1*', row[8], re.M|re.I)
+                matchInternat = re.match('^7011.+', row[29]) or re.match('\+[^1].+', row[29])
+                matchNat = re.match('^71.{10}', row[29]) or re.match('\+1.{10}', row[29])
+                matchLocal = re.match('^4....', row[29]) or re.match('^31...', row[29])
+#                matchInternat = re.match(r'\+[^1].+', row[8], re.M|re.I)
+#                matchNat = re.match(r'\+1*', row[8], re.M|re.I)
 #                writer2.writerow("file")
                 if matchInternat:
                    IntCalls += 1
                 if matchNat:
                    NatCalls += 1
+                if matchLocal:
+                    LocalCalls += 1
 
 
 
 #        writer2.writeline(IntCalls)
         International = "International calls: %s" % IntCalls
         National = "National calls: %s" % NatCalls
+        Local = "Local Calls: %s" % LocalCalls
         out2.write(International + "\n")
         out2.write(National + "\n")
+        out2.write(Local + "\n")
         print("Finished successfully!")
         infile.close()
         outfile.close()
