@@ -26,7 +26,7 @@ Example: PyCDR.py "/path/to/cdr.txt" "/path/to/output.txt" 4357
 
 
 def date_and_time(time_value):
-    return time.strftime("%m/%d/%y %H:%M:%S", time.localtime(float(time_value)))
+    return time.strftime("%m/%d/%y %H:%M:%S", time.localtime(time_value))
 
 def convert_duration(secs):
     secs = int(secs)
@@ -34,48 +34,18 @@ def convert_duration(secs):
     h, m = divmod(m, 60)
     return "%d:%02d:%02d" % (h, m, s)
 
-if __name__ == '__main__':
+infile = open('May1-2_CDR.txt'), 'r')
+outfile = open('Output.txt'), 'w')
+reader = csv.reader(infile)
+writer = csv.writer(outfile)
 
-    usage = 'ERROR!\nUsage: PyCDR.py "/path/to/cdrfile" "/path/to/output.txt" <extension or pattern>\n Example: python PyCDR.py CDR.txt Cleaned.txt 877\n\n The results should print anything that starts with 877. '
-
-    if (len(sys.argv) < 4):
-        print(usage)
-        sys.exit()
-
-    else:
-        infile = open((sys.argv[1]), 'r')
-        outfile = open((sys.argv[2]), 'w')
-        out2 = open('Totals.txt', 'w')
-        reader = csv.reader(infile)
-        writer = csv.writer(outfile)
-        IntCalls = 0
-        NatCalls = 0
-        LocalCalls = 0
-
-        writer.writerow(['Date/Time', 'Duration', 'Calling Number', 'Called Number', 'Final Called Number'] )
+writer.writerow(['Date/Time', 'Duration', 'Calling Number', 'Called Number', 'Final Called Number'] )
 
 
-        for row in reader:
-            if re.match((sys.argv[3]), row[8]) or re.match((sys.argv[3]), row[29]):
-                writer.writerow([date_and_time(row[47]),convert_duration(row[55]),row[8],row[29], row[30]])
-                matchInternat = re.match('^7011.+', row[29]) or re.match('\+[^1].+', row[29])
-                matchNat = re.match('^71.{10}', row[29]) or re.match('\+1.{10}', row[29])
-                matchLocal = re.match('^4....', row[29]) or re.match('^31...', row[29])
-                if matchInternat:
-                   IntCalls += 1
-                if matchNat:
-                   NatCalls += 1
-                if matchLocal:
-                    LocalCalls += 1
+for row in reader:
+     writer.writerow([date_and_time(float(row[47])),convert_duration(row[55]),row[8],row[29], row[30]])
 
 
-        International = "International calls: %s" % IntCalls
-        National = "National calls: %s" % NatCalls
-        Local = "Local Calls: %s" % LocalCalls
-        out2.write(International + "\n")
-        out2.write(National + "\n")
-        out2.write(Local + "\n")
-        print("Finished successfully!")
-        infile.close()
-        outfile.close()
-        out2.close()
+print("Finished successfully!")
+infile.close()
+outfile.close()
