@@ -34,8 +34,8 @@ def convert_duration(secs):
     h, m = divmod(m, 60)
     return "%d:%02d:%02d" % (h, m, s)
 
-infile = open('May1-2_CDR.txt'), 'r')
-outfile = open('Output.txt'), 'w')
+infile = open('May1-2_CDR.txt', 'r')
+outfile = open('Output.txt', 'w')
 reader = csv.reader(infile)
 writer = csv.writer(outfile)
 
@@ -44,7 +44,6 @@ writer.writerow(['Date/Time', 'Duration', 'Calling Number', 'Called Number', 'Fi
 
 for row in reader:
      writer.writerow([date_and_time(float(row[47])),convert_duration(row[55]),row[8],row[29], row[30]])
-
 
 print("Finished successfully!")
 infile.close()
