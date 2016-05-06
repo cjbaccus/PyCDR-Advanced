@@ -9,7 +9,7 @@ import re
 PyCDR.py
  
 Author: Carl Baccus
-Special thanks to original work done by Steve Campbel
+Special thanks to original work done by Steve Campbell
 """
  
  
