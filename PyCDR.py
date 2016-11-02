@@ -10,7 +10,9 @@ import xlsxwriter
 PyCDR.py
  
 Author: Carl Baccus
-Special thanks to original work done by Steve Campbell
+Special thanks to original work done by Steve Campbell.
+This version is specifically catered to prepopulating an Excel spreadsheet.
+This version in particular is used for a very purpose specific means.
 """
 workbook = xlsxwriter.Workbook('CDRdata.xlsx')
 worksheet = workbook.add_worksheet()
@@ -45,21 +47,7 @@ with open((sys.argv[1]), 'r') as infile, open((sys.argv[2]), 'w') as outfile:
             worksheet.write(xrow, xcol + 4, row[30])
             worksheet.write(xrow, xcol + 5, row[31])
             xrow += 1
-            writer.writerow([date_and_time(row[47]),convert_duration(row[55]),row[8],row[29], row[30], row[31]])
+            # Following line is for writing to csv to test, commenting out for this branch.
+            # writer.writerow([date_and_time(row[47]),convert_duration(row[55]),row[8],row[29], row[30], row[31]])
     print "All Done"
 workbook.close()
-
-"""
-with open((sys.argv[1]), 'r') as infile, open((sys.argv[2]), 'w') as outfile:
-    reader = csv.reader(infile)
-    next(reader, None)  # skip the headers
-    writer = csv.writer(outfile)
-    writer.writerow(['Date/Time', 'Duration', 'Calling Number', 'Called Number', 'Final Called Number', 'finalCalled-UserID'] )
-    for row in reader:
-        if row[47] == "0":
-            pass
-        elif re.match("\d+"+(sys.argv[3]), row[8]) or re.match("\d+"+(sys.argv[3]), row[29]) or re.match("\d+"+(sys.argv[3]), row[30]):
-            writer.writerow([date_and_time(row[47]),convert_duration(row[55]),row[8],row[29], row[30], row[31]])
-    print "All Done"
-
-"""
