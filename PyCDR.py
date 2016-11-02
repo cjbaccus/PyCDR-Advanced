@@ -30,6 +30,6 @@ with open((sys.argv[1]), 'r') as infile, open((sys.argv[2]), 'w') as outfile:
     for row in reader:
         if row[47] == "0":
             pass
-        elif re.match("\d+"+(sys.argv[3]), row[8]) or re.match("\d+"+(sys.argv[3]), row[29]) or re.match("\d+"+(sys.argv[3]), row[30]):
+        elif re.match("\d+"+"5000", row[29]):
             writer.writerow([date_and_time(row[47]),convert_duration(row[55]),row[8],row[29], row[30], row[31]])
     print "All Done"
