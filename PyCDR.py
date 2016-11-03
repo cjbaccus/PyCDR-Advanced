@@ -19,7 +19,7 @@ workbook = xlsxwriter.Workbook((sys.argv[2])+'.xlsx')
 worksheet = workbook.add_worksheet()
 
 # set formatting for date in excel
-format1 = workbook.add_format({'num_format': 'mm/dd/yy hh:mm:ss'})
+format1 = workbook.add_format({'num_format': 'MM/DD/YY hh:mm:ss'})
  
 def date_and_time(time_value):
     return time.strftime("%m/%d/%y %H:%M:%S", time.localtime(float(time_value)))
@@ -46,7 +46,8 @@ with open((sys.argv[1]), 'r') as infile:
         if row[47] == "0":
             pass
         elif re.match("\d+" + "5000", row[29]):
-            worksheet.write(xrow, xcol, date_and_time(row[47]), format1)
+            as_datetime = datetime.strptime(date_and_time(row[47]), '%m/%d/%y %H:%M:%S')
+            worksheet.write(xrow, xcol, as_datetime, format1)
             worksheet.write(xrow, xcol + 1, convert_duration(row[55]))
             worksheet.write(xrow, xcol + 2, row[8])
             worksheet.write(xrow, xcol + 3, row[29])
