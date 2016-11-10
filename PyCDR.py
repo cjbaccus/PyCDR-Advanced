@@ -7,13 +7,13 @@ import re
 import xlsxwriter
 from datetime import datetime
  
+ 
 """
 PyCDR.py
  
 Author: Carl Baccus
-Special thanks to original work done by Steve Campbell.
-This version is specifically catered to prepopulating an Excel spreadsheet.
-This version in particular is used for a very purpose specific means.
+### Usage: python PyCDR.py <CDR to read in> <Spreadsheet to output to> <extension of Called number>
+# Thanks to the original work done by Steve Campbel.
 """
 workbook = xlsxwriter.Workbook((sys.argv[2])+'.xlsx')
 worksheet = workbook.add_worksheet()
@@ -29,8 +29,8 @@ def convert_duration(secs):
     m, s = divmod(secs, 60)
     h, m = divmod(m, 60)
     return "%d:%02d:%02d" % (h, m, s)
-
-with open((sys.argv[1]), 'r') as infile:
+ 
+with open((sys.argv[1]), 'r') as infile, open((sys.argv[2]), 'w') as outfile:
     reader = csv.reader(infile)
     next(reader, None)  # skip the headers
     xrow = 0
