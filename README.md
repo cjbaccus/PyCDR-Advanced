@@ -19,3 +19,5 @@ Cisco CDR's.
 ###Future enhancements planned
 * This version switched to conert to Excel instead of csv for the output
 * Add in usage directions
+* Added in another file CombineCSV.py to clean up cdr directories that contain multicple CDR files and concat them into one file.
+
