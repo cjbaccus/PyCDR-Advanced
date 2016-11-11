@@ -17,8 +17,5 @@ Cisco CDR's.
 * Changed output file to write directly to Excel spreadsheet (this allows date format to be set, and phone numbers to be imported as text)
 
 ###Future enhancements planned
-<<<<<<< HEAD
-* This special branch is specifically to get the data imported directly into an excel spreadsheet so that pivot charts can be made
-=======
+* This version switched to conert to Excel instead of csv for the output
 * Add in usage directions
->>>>>>> 28326d60225ea46c00417966d228ec91a2d53d91
