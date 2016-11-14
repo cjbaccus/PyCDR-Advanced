@@ -18,8 +18,10 @@ with open('output.csv','wb') as fout:
         print filename
         with open(filename) as fin:
         	for line in fin:
-        		if re.match("cdrRecordType.+",line):
+        		if re.match(".+cdrRecordType.+",line):
 					pass
-        		else:
+        		elif re.match(".+VARCHAR.+", line):
+					pass
+			else:
         			fout.write(line)
  
