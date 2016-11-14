@@ -17,7 +17,7 @@ Cisco CDR's.
 * Changed output file to write directly to Excel spreadsheet (this allows date format to be set, and phone numbers to be imported as text)
 
 ###Future enhancements planned
-* This version switched to conert to Excel instead of csv for the output
+* This version switched to convert to Excel instead of csv for the output
 * Add in usage directions
 * Added in another file CombineCSV.py to clean up cdr directories that contain multicple CDR files and concat them into one file.
 
